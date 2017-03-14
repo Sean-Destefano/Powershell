@@ -26,10 +26,3 @@ if ((read-host -Prompt '(y/n): Does this look correct?') -ne 'y')  {Return}
 get-content 'C:\winpe_amd64\mount\windows\system32\image.bat'
 if ((read-host -Prompt '(y/n): Does this look correct?') -ne 'y')  {Return}
 dismount-windowsimage -path C:\winpe_amd64\mount -CheckIntegrity -save
-
-
-
-
-
-
-TESTSTETSTESTSETSTE
