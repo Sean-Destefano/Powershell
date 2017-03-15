@@ -26,5 +26,8 @@ if ((read-host -Prompt '(y/n): Does this look correct?') -ne 'y')  {Return}
 get-content 'C:\winpe_amd64\mount\windows\system32\image.bat'
 if ((read-host -Prompt '(y/n): Does this look correct?') -ne 'y')  {Return}
 dismount-windowsimage -path C:\winpe_amd64\mount -CheckIntegrity -save
-
-USB TESTING
+get-disk | Out-Host
+$Disknumber = read-host -Prompt 'Type in the disk number of the flash drive'
+if ($Disknumber -ne '') {get-disk $Disknumber | clear-Disk -RemoveData -WhatIf} #Remove -WhatIf
+Get-Disk $Disknumber | Clear-Disk -RemoveData -Confirm
+New-Partition -DiskNumber $disknumber -UseMaximumSize -IsActive -DriveLetter F | Format-Volume -FileSystem NTFS -NewFileSystemLabel USB
