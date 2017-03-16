@@ -26,3 +26,12 @@ if ((read-host -Prompt '(y/n): Does this look correct?') -ne 'y')  {Return}
 get-content 'C:\winpe_amd64\mount\windows\system32\image.bat'
 if ((read-host -Prompt '(y/n): Does this look correct?') -ne 'y')  {Return}
 dismount-windowsimage -path C:\winpe_amd64\mount -CheckIntegrity -save
+### NEW DISK COMMANDS
+get-disk | Out-Host
+$Disknumber = read-host -Prompt 'Type in the disk number of the flash drive'
+$Driveletter = read-host -Prompt 'Type in the desired USB volume letter'
+$Filetocopy = read-host -Prompt 'Type in path to folder to copy, leave blank for manual'
+if ($Disknumber -ne '') {get-disk $Disknumber | clear-Disk -RemoveData -Confirm}
+else {return}
+New-Partition -DiskNumber $Disknumber -UseMaximumSize -IsActive -DriveLetter $Driveletter | Format-Volume -FileSystem NTFS -NewFileSystemLabel USB
+if ($filetocopy -ne '') {copy-item -path $Filetocopy -destination "$Driveletter`:\" -recurse -confirm -force}
